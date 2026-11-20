@@ -1,0 +1,23 @@
+controller:
+  config:
+    use-proxy-protocol: "true"
+    real-ip-header: "proxy_protocol"
+    use-forwarded-headers: "true"
+    allow-snippet-annotations: "true"
+  service:
+    type: LoadBalancer
+    external:
+      enabled: true
+    annotations:
+      service.beta.kubernetes.io/aws-load-balancer-proxy-protocol: "*"
+      service.beta.kubernetes.io/aws-load-balancer-ssl-cert: arn:aws:acm:eu-central-1:627271880942:certificate/31632848-076c-4042-9144-5b3edc819f7b, arn:aws:acm:eu-central-1:627271880942:certificate/fdbb7c66-bcfc-4191-99a1-b68dc957daf6, arn:aws:acm:eu-central-1:627271880942:certificate/897a46d9-d625-4c1a-8afa-32075b1619ff, arn:aws:acm:eu-central-1:627271880942:certificate/7e02d3f4-73bd-46b4-a6ec-2af51bc3e4f2
+      #service.beta.kubernetes.io/aws-load-balancer-type: "external"
+      service.beta.kubernetes.io/aws-load-balancer-nlb-target-type: "ip"
+      service.beta.kubernetes.io/aws-load-balancer-scheme: internet-facing
+      service.beta.kubernetes.io/aws-load-balancer-backend-protocol: tcp
+      service.beta.kubernetes.io/aws-load-balancer-ssl-ports: “443”
+      service.beta.kubernetes.io/aws-load-balancer-type: nlb #<- IMPORTANT
+      service.beta.kubernetes.io/aws-load-balancer-subnets: "subnet-0b7e751c12b77a87c, subnet-0240e1e63cc63bd26"
+      service.beta.kubernetes.io/aws-load-balancer-cross-zone-load-balancing-enabled: 'true'
+      service.beta.kubernetes.io/aws-load-balancer-name: "k8s-nlb-external"
+
